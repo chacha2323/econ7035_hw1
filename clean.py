@@ -9,7 +9,8 @@ def clean(input1, input2):
     combined_df.drop('id', axis = 1, inplace=True)                                                  # you may remove one column to avoid redundancy after merging
     combined_df = combined_df.loc[~combined_df['job'].str.contains('insurance|Insurance', regex=True)]    # drop any rows if their job value contains ‘insurance’ or ‘Insurance’
 
-    return combined_df
+    return combined_df, combined_df.shape                                                                 # update to print the shape of the output file
+
 
 if __name__ == '__main__':
     import argparse
@@ -22,4 +23,5 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     cleaned = clean(args.input1, args.input2)
-    cleaned.to_csv(args.output, index=False)
+    cleaned[0].to_csv(args.output, index=False)
+    print (cleaned[1])
